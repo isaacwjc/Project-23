@@ -4,6 +4,8 @@ const Engine = Matter.Engine;
 const World = Matter.World;
 const Bodies = Matter.Bodies;
 const Body = Matter.Body;
+var check = 0;
+
 
 function preload()
 {
@@ -68,15 +70,36 @@ function setup() {
 
 
 function draw() {
-  rectMode(CENTER);
-  background(0);
+  	rectMode(CENTER);
+ 	background(0);
  
-  packageSprite.x= packageBody.position.x 
-  packageSprite.y= packageBody.position.y 
+  	Engine.update(engine);
+  
+  	packageSprite.x= packageBody.position.x;
+  	packageSprite.y= packageBody.position.y;
+
+ 	drawSprites(); 
+}
+
+function keyPressed(){
+	if (keyCode === LEFT_ARROW){
+		helicopterSprite.x = helicopterSprite.x - 20;
+		if(check===0){
+			Matter.Body.translate(packageBody, {x:-20,y:0});
+		}
+	}
+  
+	if (keyCode === RIGHT_ARROW){
+		helicopterSprite.x = helicopterSprite.x + 20;
+		if(check===0){
+	  		Matter.Body.translate(packageBody, {x:20,y:0});
+		}
+  	}
+  
 
   
-  drawSprites();
-  
-  
- 
+	if (keyCode === DOWN_ARROW){
+		Matter.Body.setStatic(packageBody,false);
+		check=1;
+	}
 }
